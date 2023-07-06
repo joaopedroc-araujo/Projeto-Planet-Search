@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
+import { useFilterContext } from '../hooks/useFilterContext';
 
 function Table() {
   const url = 'https://swapi.dev/api/planets';
   const planets = useFetch(url);
   const [data, setData] = useState(null);
-  // if (planets.isLoading === true) return <p>Loading...</p>;
+  const { filterValue, setFilterValue } = useFilterContext();
+
   useEffect(() => {
     if (planets.isLoading === false && planets.data) {
       const planetData = planets.data.results.map((planet) => {
@@ -32,28 +34,50 @@ function Table() {
     );
   }
 
-  const headers = Object.keys(data[0]);
+  const filteredData = data.filter((planet) => planet.name.toLowerCase()
+    .includes(filterValue.toLowerCase()));
+
+  const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {headers.map((header) => (
-            <th key={ header }>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data
-          && data.map((planet) => (
-            <tr key={ planet.name }>
+    <>
+      <div>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={ filterValue }
+          data-testid="name-filter"
+          onChange={ ({ target }) => setFilterValue(target.value) }
+        />
+      </div>
+      <section>
+        <table>
+          <thead>
+            <tr>
               {headers.map((header) => (
-                <td key={ planet.name + header }>{planet[header]}</td>
+                <th key={ header }>{header}</th>
               ))}
             </tr>
-          ))}
-      </tbody>
-    </table>
+          </thead>
+          <tbody>
+            {filteredData.length > 0 ? (
+              filteredData.map((planet) => (
+                <tr key={ planet.name }>
+                  {headers.map((header) => (
+                    <td key={ planet.name + header }>{planet[header]}</td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No planets found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </section>
+
+    </>
   );
 }
 export default Table;
