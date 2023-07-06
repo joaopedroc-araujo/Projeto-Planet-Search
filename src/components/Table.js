@@ -6,7 +6,19 @@ function Table() {
   const url = 'https://swapi.dev/api/planets';
   const planets = useFetch(url);
   const [data, setData] = useState(null);
-  const { filterValue, setFilterValue } = useFilterContext();
+  // const [changedData, setChangedData] = useState(null);
+
+  const {
+    filterValue,
+    setFilterValue,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    applyFilter,
+  } = useFilterContext();
 
   useEffect(() => {
     if (planets.isLoading === false && planets.data) {
@@ -15,6 +27,7 @@ function Table() {
         return rest;
       });
       setData(planetData);
+      // setChangedData(planetData);
     }
   }, [planets.isLoading, planets.data]);
 
@@ -39,6 +52,12 @@ function Table() {
 
   const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
+  const handleFilter = () => {
+    const newFilteredData = applyFilter(data);
+    console.log(newFilteredData);
+    setData(newFilteredData);
+  };
+
   return (
     <>
       <div>
@@ -50,6 +69,48 @@ function Table() {
           onChange={ ({ target }) => setFilterValue(target.value) }
         />
       </div>
+      <div>
+        <select
+          value={ column }
+          onChange={ ({ target }) => setColumn(target.value) }
+          data-testid="column-filter"
+        >
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+      </div>
+
+      <div>
+        <select
+          value={ comparison }
+          onChange={ ({ target }) => setComparison(target.value) }
+          data-testid="comparison-filter"
+        >
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+      </div>
+      <div>
+        <input
+          type="text"
+          value={ value }
+          onChange={ ({ target }) => setValue(target.value) }
+          data-testid="value-filter"
+        />
+      </div>
+
+      <button
+        onClick={ () => {
+          handleFilter();
+        } }
+        data-testid="button-filter"
+      >
+        Filter
+      </button>
       <section>
         <table>
           <thead>
@@ -60,7 +121,11 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {filteredData.length > 0 ? (
+            {filteredData.length === 0 ? (
+              <tr>
+                <td colSpan={ headers.length }>No planets found</td>
+              </tr>
+            ) : (
               filteredData.map((planet) => (
                 <tr key={ planet.name }>
                   {headers.map((header) => (
@@ -68,15 +133,10 @@ function Table() {
                   ))}
                 </tr>
               ))
-            ) : (
-              <tr>
-                <td colSpan="6">No planets found</td>
-              </tr>
             )}
           </tbody>
         </table>
       </section>
-
     </>
   );
 }
