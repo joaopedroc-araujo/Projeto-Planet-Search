@@ -7,13 +7,6 @@ function Table() {
   const planets = useFetch(url);
   const [data, setData] = useState(null);
   // const [changedData, setChangedData] = useState(null);
-  const [options, setOptions] = useState([
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ]);
 
   const {
     filterValue,
@@ -25,6 +18,8 @@ function Table() {
     value,
     setValue,
     applyFilter,
+    selectedColumns,
+    setSelectedColumns,
   } = useFilterContext();
 
   useEffect(() => {
@@ -39,10 +34,18 @@ function Table() {
   }, [planets.isLoading, planets.data]);
 
   useEffect(() => {
-    if (!options.includes(column)) {
-      setColumn(options[0]);
+    if (data) {
+      const allColumns = data.length > 0 ? Object.keys(data[0]) : [];
+      const remainingColumns = allColumns.filter(
+        (col) => !selectedColumns.includes(col),
+      );
+      if (remainingColumns.length === 0) {
+        setColumn('');
+      } else if (!remainingColumns.includes(column)) {
+        setColumn(remainingColumns[0]);
+      }
     }
-  }, [options, column, setColumn]);
+  }, [data, selectedColumns, column, setColumn]);
 
   if (!data) {
     return <p>Loading...</p>;
@@ -65,20 +68,27 @@ function Table() {
 
   const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
-  const removeOption = () => {
-    const updatedOptions = options.filter((option) => option !== column);
-
-    // setColumn('population'); // Defina o valor inicial do select para "population"
-    setOptions(updatedOptions);
-  };
-
   const handleFilter = () => {
-    removeOption();
     const newFilteredData = applyFilter(data);
     console.log(newFilteredData);
     setData(newFilteredData);
-    // setColumn('');
   };
+  const handleColumnChange = (selectedColumn) => {
+    setColumn(selectedColumn);
+    // setValue(0);
+  };
+
+  const handleApplyFilter = () => {
+    if (!selectedColumns.includes(column)) {
+      setSelectedColumns([...selectedColumns, column]);
+    }
+    handleFilter();
+    console.log(filteredData);
+    // setValue(0);
+  };
+
+  const availableColumns = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
 
   return (
     <>
@@ -94,13 +104,15 @@ function Table() {
       <div>
         <select
           value={ column }
-          onChange={ ({ target }) => setColumn(target.value) }
+          onChange={ ({ target }) => handleColumnChange(target.value) }
           data-testid="column-filter"
         >
-          {options.map((option) => (
-            <option value={ option } key={ option }>
-              {option}
-            </option>
+          {availableColumns.map((col) => (
+            !selectedColumns.includes(col) && (
+              <option key={ col } value={ col }>
+                {col}
+              </option>
+            )
           ))}
         </select>
       </div>
@@ -118,7 +130,7 @@ function Table() {
       </div>
       <div>
         <input
-          type="text"
+          type="number"
           value={ value }
           onChange={ ({ target }) => setValue(target.value) }
           data-testid="value-filter"
@@ -126,9 +138,7 @@ function Table() {
       </div>
 
       <button
-        onClick={ () => {
-          handleFilter();
-        } }
+        onClick={ handleApplyFilter }
         data-testid="button-filter"
       >
         Filter

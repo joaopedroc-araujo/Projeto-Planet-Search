@@ -8,6 +8,8 @@ export function FilterProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [selectedColumns, setSelectedColumns] = useState([]);
+  const [newValue, setNewValue] = useState([]);
 
   const applyFilter = (data) => {
     const parsedValue = parseFloat(value);
@@ -26,7 +28,7 @@ export function FilterProvider({ children }) {
     } else {
       newData = data;
     }
-
+    setNewValue(newData);
     return newData;
   };
 
@@ -40,6 +42,9 @@ export function FilterProvider({ children }) {
     value,
     setValue,
     applyFilter,
+    selectedColumns,
+    setSelectedColumns,
+    newValue,
   };
 
   return (
