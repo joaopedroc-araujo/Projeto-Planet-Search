@@ -5,15 +5,21 @@ const FilterContext = createContext('');
 
 export function FilterProvider({ children }) {
   const [filterValue, setFilterValue] = useState('');
-  const [column, setColumn] = useState('population');
+  const [column, setColumn] = useState(['population']);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [newValue, setNewValue] = useState([]);
+  const [appliedFilters, setAppliedFilters] = useState([]);
+
+  // const [activeFilters, setActiveFilters] = useState([]);
 
   const applyFilter = (data) => {
     const parsedValue = parseFloat(value);
     let newData = [];
+
+    setAppliedFilters([...appliedFilters, { column, comparison, value }]);
+    // setActiveFilters([...appliedFilters, filter]);
 
     if (!Number.isNaN(parsedValue)) {
       if (comparison === 'maior que') {
@@ -28,7 +34,6 @@ export function FilterProvider({ children }) {
     } else {
       newData = data;
     }
-    setNewValue(newData);
     return newData;
   };
 
@@ -45,6 +50,9 @@ export function FilterProvider({ children }) {
     selectedColumns,
     setSelectedColumns,
     newValue,
+    appliedFilters,
+    setAppliedFilters,
+    setNewValue,
   };
 
   return (

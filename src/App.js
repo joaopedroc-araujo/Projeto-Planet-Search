@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Table from './components/Table';
+// import { SortingContext } from './context/SortingContext';
 import { FilterProvider } from './hooks/useFilterContext';
 
 function App() {

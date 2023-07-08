@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
+// import { originalOptions } from '../helpers/originalOptions';
 import useFetch from '../hooks/useFetch';
 import { useFilterContext } from '../hooks/useFilterContext';
+import SortingComponent from './SortingComponent';
 
 function Table() {
   const url = 'https://swapi.dev/api/planets';
   const planets = useFetch(url);
   const [data, setData] = useState(null);
-  // const [changedData, setChangedData] = useState(null);
+  const [originalData, setOriginalData] = useState(null);
+  // const [previousState, setPreviousState] = useState([]);
   const [options, setOptions] = useState([
     'population',
     'orbital_period',
@@ -25,6 +28,8 @@ function Table() {
     value,
     setValue,
     applyFilter,
+    appliedFilters,
+    setAppliedFilters,
   } = useFilterContext();
 
   useEffect(() => {
@@ -34,7 +39,8 @@ function Table() {
         return rest;
       });
       setData(planetData);
-      // setChangedData(planetData);
+      setOriginalData(planetData);
+      // console.log(originalData);
     }
   }, [planets.isLoading, planets.data]);
 
@@ -60,24 +66,37 @@ function Table() {
     );
   }
 
-  const filteredData = data.filter((planet) => planet.name.toLowerCase()
+  const filteredData = data.filter((planet) => planet.name && planet.name.toLowerCase()
     .includes(filterValue.toLowerCase()));
-
   const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
   const removeOption = () => {
     const updatedOptions = options.filter((option) => option !== column);
 
-    // setColumn('population'); // Defina o valor inicial do select para "population"
     setOptions(updatedOptions);
   };
 
+  const removeFilter = (columnToRemove) => {
+    const updatedFilters = appliedFilters
+      .filter((filter) => filter.column !== columnToRemove);
+    setAppliedFilters(updatedFilters);
+    const newData = [...originalData];
+    updatedFilters.forEach((filter) => {
+      applyFilter(newData, filter);
+    });
+    setData(newData);
+
+    if (!options.includes(columnToRemove)) {
+      setOptions([...options, columnToRemove]);
+    }
+  };
+
   const handleFilter = () => {
-    removeOption();
-    const newFilteredData = applyFilter(data);
-    console.log(newFilteredData);
+    const newFilteredData = applyFilter(originalData);
+    console.log(originalData);
+    console.log(appliedFilters);
     setData(newFilteredData);
-    // setColumn('');
+    setValue(0);
   };
 
   return (
@@ -127,13 +146,38 @@ function Table() {
 
       <button
         onClick={ () => {
+          removeOption();
           handleFilter();
         } }
         data-testid="button-filter"
       >
         Filter
       </button>
+      {appliedFilters.map((filter) => (
+        <span
+          key={ filter.column }
+          data-testid="filter"
+        >
+          <button
+            onClick={ () => removeFilter(filter.column) }
+          >
+            {filter.column}
+            {' '}
+            {filter.comparison}
+            {' '}
+            {filter.value}
+            {' '}
+            x
+          </button>
+        </span>
+      ))}
+      <button
+        data-testid="button-remove-filters"
+      >
+        Remover todas filtragens
+      </button>
       <section>
+        <SortingComponent data={ data } setData={ setData } />
         <table>
           <thead>
             <tr>
@@ -149,9 +193,16 @@ function Table() {
               </tr>
             ) : (
               filteredData.map((planet) => (
-                <tr key={ planet.name }>
+                <tr
+                  key={ planet.name }
+                  data-testid="planet-name"
+                >
                   {headers.map((header) => (
-                    <td key={ planet.name + header }>{planet[header]}</td>
+                    <td
+                      key={ planet.name + header }
+                    >
+                      {planet[header]}
+                    </td>
                   ))}
                 </tr>
               ))
@@ -159,7 +210,9 @@ function Table() {
           </tbody>
         </table>
       </section>
+
     </>
+
   );
 }
 export default Table;
