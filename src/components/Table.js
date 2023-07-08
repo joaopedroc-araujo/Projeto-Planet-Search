@@ -92,9 +92,9 @@ function Table() {
   };
 
   const handleFilter = () => {
-    const newFilteredData = applyFilter(originalData);
-    console.log(originalData);
-    console.log(appliedFilters);
+    const newFilteredData = applyFilter(data);
+    // console.log(originalData);
+    // console.log(appliedFilters);
     setData(newFilteredData);
     setValue(0);
   };

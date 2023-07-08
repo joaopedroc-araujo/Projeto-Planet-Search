@@ -44,7 +44,7 @@ function SortingComponent({ data, setData }) {
   };
 
   // console.log(sortColumn);
-  console.log(sortOrder);
+  // console.log(sortOrder);
   return (
     <div>
       <div>
