@@ -12,14 +12,11 @@ export function FilterProvider({ children }) {
   const [newValue, setNewValue] = useState([]);
   const [appliedFilters, setAppliedFilters] = useState([]);
 
-  // const [activeFilters, setActiveFilters] = useState([]);
-
   const applyFilter = (data) => {
     const parsedValue = parseFloat(value);
     let newData = [];
 
     setAppliedFilters([...appliedFilters, { column, comparison, value }]);
-    // setActiveFilters([...appliedFilters, filter]);
 
     if (!Number.isNaN(parsedValue)) {
       if (comparison === 'maior que') {

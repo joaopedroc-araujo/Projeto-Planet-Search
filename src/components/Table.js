@@ -9,7 +9,6 @@ function Table() {
   const planets = useFetch(url);
   const [data, setData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
-  // const [previousState, setPreviousState] = useState([]);
   const [options, setOptions] = useState([
     'population',
     'orbital_period',
@@ -40,7 +39,6 @@ function Table() {
       });
       setData(planetData);
       setOriginalData(planetData);
-      // console.log(originalData);
     }
   }, [planets.isLoading, planets.data]);
 
@@ -76,27 +74,55 @@ function Table() {
     setOptions(updatedOptions);
   };
 
+  const handleFilter = () => {
+    console.log(data);
+    const newFilteredData = applyFilter(data);
+    setData(newFilteredData);
+    // console.log(newFilteredData);
+    setValue(0);
+  };
+
+  const reapplyFilters = (reapplyData, filters) => {
+    let newData = reapplyData;
+
+    filters.forEach(({ column: reappliedColumn, comparison: reappliedComparison,
+      value: reappliedValue }) => {
+      const parsedValue = parseFloat(reappliedValue);
+
+      if (!Number.isNaN(parsedValue)) {
+        if (reappliedComparison === 'maior que') {
+          newData = newData
+            .filter((planet) => parseFloat(planet[reappliedColumn]) > parsedValue);
+        } else if (reappliedComparison === 'menor que') {
+          newData = newData
+            .filter((planet) => parseFloat(planet[reappliedColumn]) < parsedValue);
+        } else if (reappliedComparison === 'igual a') {
+          newData = newData
+            .filter((planet) => parseFloat(planet[reappliedColumn]) === parsedValue);
+        }
+      }
+    });
+
+    return newData;
+  };
+
   const removeFilter = (columnToRemove) => {
+    setData(originalData);
     const updatedFilters = appliedFilters
       .filter((filter) => filter.column !== columnToRemove);
     setAppliedFilters(updatedFilters);
-    const newData = [...originalData];
-    updatedFilters.forEach((filter) => {
-      applyFilter(newData, filter);
-    });
-    setData(newData);
 
     if (!options.includes(columnToRemove)) {
       setOptions([...options, columnToRemove]);
     }
+
+    const newFilteredData = reapplyFilters(originalData, updatedFilters);
+    setData(newFilteredData);
   };
 
-  const handleFilter = () => {
-    const newFilteredData = applyFilter(data);
-    // console.log(originalData);
-    // console.log(appliedFilters);
-    setData(newFilteredData);
-    setValue(0);
+  const removeAllFilters = () => {
+    setData(originalData);
+    setAppliedFilters([]);
   };
 
   return (
@@ -173,6 +199,7 @@ function Table() {
       ))}
       <button
         data-testid="button-remove-filters"
+        onClick={ () => removeAllFilters() }
       >
         Remover todas filtragens
       </button>
