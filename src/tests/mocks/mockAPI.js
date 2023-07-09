@@ -1,8 +1,5 @@
-export const mockAPI = () => {
-  return Promise.resolve({
-    json: () =>
-      Promise.resolve({
-        results: [
+export const mockAPI = {
+  results: [
     {
       name: 'Tatooine',
       rotation_period: '23',
@@ -47,7 +44,4 @@ export const mockAPI = () => {
       url: 'https://swapi.dev/api/planets/2/',
     },
   ],
-}),
-});
 };
-

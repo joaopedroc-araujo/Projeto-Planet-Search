@@ -32,12 +32,14 @@ function Table() {
   } = useFilterContext();
 
   useEffect(() => {
+    // console.log('planets data', planets.data);
     if (planets.isLoading === false && planets.data) {
       const planetData = planets.data.results.map((planet) => {
         const { residents, ...rest } = planet;
         return rest;
       });
       setData(planetData);
+      // console.log('data returned', data);
       setOriginalData(planetData);
     }
   }, [planets.isLoading, planets.data]);
@@ -47,10 +49,6 @@ function Table() {
       setColumn(options[0]);
     }
   }, [options, column, setColumn]);
-
-  if (!data) {
-    return <p>Loading...</p>;
-  }
 
   if (planets.error) {
     return (
@@ -63,11 +61,17 @@ function Table() {
       </span>
     );
   }
+  if (!data) {
+    // console.log('rendering loading');
+    return <p>Loading...</p>;
+  }
 
   const filteredData = data.filter((planet) => planet.name && planet.name.toLowerCase()
     .includes(filterValue.toLowerCase()));
+
   const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
+  // console.log(headers);
   const removeOption = () => {
     const updatedOptions = options.filter((option) => option !== column);
 
@@ -75,7 +79,7 @@ function Table() {
   };
 
   const handleFilter = () => {
-    console.log(data);
+    // console.log(data);
     const newFilteredData = applyFilter(data);
     setData(newFilteredData);
     // console.log(newFilteredData);
