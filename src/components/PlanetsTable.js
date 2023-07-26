@@ -1,10 +1,14 @@
+/* eslint-disable max-lines */
 import { useEffect, useState } from 'react';
-// import { originalOptions } from '../helpers/originalOptions';
+import { Spinner } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
 import useFetch from '../hooks/useFetch';
 import { useFilterContext } from '../hooks/useFilterContext';
 import SortingComponent from './SortingComponent';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './PlanetsTable.css';
 
-function Table() {
+function PlanetsTable() {
   const url = 'https://swapi.dev/api/planets';
   const planets = useFetch(url);
   const [data, setData] = useState(null);
@@ -32,14 +36,12 @@ function Table() {
   } = useFilterContext();
 
   useEffect(() => {
-    // console.log('planets data', planets.data);
     if (planets.isLoading === false && planets.data) {
       const planetData = planets.data.results.map((planet) => {
         const { residents, ...rest } = planet;
         return rest;
       });
       setData(planetData);
-      // console.log('data returned', data);
       setOriginalData(planetData);
     }
   }, [planets.isLoading, planets.data]);
@@ -62,14 +64,11 @@ function Table() {
     );
   }
   if (!data) {
-    // console.log('rendering loading');
-    return <p>Loading...</p>;
+    return <Spinner animation="grow" variant="warning" />;
   }
 
   const filteredData = data.filter((planet) => planet.name && planet.name.toLowerCase()
     .includes(filterValue.toLowerCase()));
-
-  const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
   // console.log(headers);
   const removeOption = () => {
@@ -79,10 +78,8 @@ function Table() {
   };
 
   const handleFilter = () => {
-    // console.log(data);
     const newFilteredData = applyFilter(data);
     setData(newFilteredData);
-    // console.log(newFilteredData);
     setValue(0);
   };
 
@@ -209,41 +206,76 @@ function Table() {
       </button>
       <section>
         <SortingComponent data={ data } setData={ setData } />
-        <table>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th key={ header }>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.length === 0 ? (
-              <tr>
-                <td colSpan={ headers.length }>No planets found</td>
-              </tr>
-            ) : (
-              filteredData.map((planet) => (
-                <tr
+        <Card style={ { width: '18rem' } }>
+          {filteredData.length === 0 ? (
+            <h3>No planets found</h3>
+          ) : (
+            filteredData.map((planet) => (
+              <>
+                <Card.Img
                   key={ planet.name }
-                  data-testid="planet-name"
-                >
-                  {headers.map((header) => (
-                    <td
-                      key={ planet.name + header }
-                    >
-                      {planet[header]}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                  variant="top"
+                  src="holder.js/100px180"
+                />
+                <Card.Body>
+                  <Card.Title>{planet.name}</Card.Title>
+                  <br />
+                  <Card.Text>
+                    Population:
+                    {' '}
+                    {planet.population}
+                  </Card.Text>
+                  <Card.Text>
+                    Climate:
+                    {' '}
+                    {planet.climate}
+                  </Card.Text>
+                  <br />
+                  <Card.Text>
+                    Terrain:
+                    {' '}
+                    {planet.terrain}
+                  </Card.Text>
+                  <br />
+                  <Card.Text>
+                    Rotation Period:
+                    {' '}
+                    {planet.rotation_period}
+                  </Card.Text>
+                  <br />
+                  <Card.Text>
+                    Orbital Period:
+                    {' '}
+                    {planet.orbital_period}
+                  </Card.Text>
+                  <br />
+                  <Card.Text>
+                    Diameter:
+                    {' '}
+                    {planet.diameter}
+                  </Card.Text>
+                  <br />
+                  <Card.Text>
+                    Surface Water:
+                    {' '}
+                    {planet.surface_water}
+                  </Card.Text>
+                  <br />
+                  <Card.Text>
+                    Gravity:
+                    {' '}
+                    {planet.gravity}
+                  </Card.Text>
+                </Card.Body>
+
+              </>
+            )))}
+        </Card>
       </section>
 
     </>
 
   );
 }
-export default Table;
+
+export default PlanetsTable;

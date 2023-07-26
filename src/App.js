@@ -1,15 +1,22 @@
 import React from 'react';
 import './App.css';
-import Table from './components/Table';
-// import { SortingContext } from './context/SortingContext';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { FilterProvider } from './hooks/useFilterContext';
+import logo from './assets/generatedtext (1).png';
+import PlanetsTable from './components/PlanetsTable';
 
 function App() {
   return (
     <FilterProvider>
-      <header>Projeto Star Wars</header>
+      <header className="header-logo">
+        <img
+          src={ logo }
+          alt="Planet Search logo"
+        />
+      </header>
       <main>
-        <Table />
+        <PlanetsTable />
       </main>
     </FilterProvider>
   );
