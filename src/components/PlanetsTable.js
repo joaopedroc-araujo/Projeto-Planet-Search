@@ -7,6 +7,7 @@ import { useFilterContext } from '../hooks/useFilterContext';
 import SortingComponent from './SortingComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PlanetsTable.css';
+import { planetsImages } from '../helpers/planetsImages';
 
 function PlanetsTable() {
   const url = 'https://swapi.dev/api/planets';
@@ -204,75 +205,71 @@ function PlanetsTable() {
       >
         Remover todas filtragens
       </button>
-      <section>
-        <SortingComponent data={ data } setData={ setData } />
-        <Card style={ { width: '18rem' } }>
-          {filteredData.length === 0 ? (
-            <h3>No planets found</h3>
-          ) : (
-            filteredData.map((planet) => (
-              <>
-                <Card.Img
-                  key={ planet.name }
-                  variant="top"
-                  src="holder.js/100px180"
-                />
-                <Card.Body>
-                  <Card.Title>{planet.name}</Card.Title>
-                  <br />
-                  <Card.Text>
+      <SortingComponent data={ data } setData={ setData } />
+      <section className="card-section">
+        {filteredData.length === 0 ? (
+          <h3>No planets found</h3>
+        ) : (
+          filteredData.map((planet) => (
+            <Card
+              style={ { width: '30rem' } }
+              className="text-center planet-card"
+              key={ planet.name }
+            >
+              <Card.Img
+                variant="top"
+                src={ planetsImages[0][planet.name] }
+                alt={ `${planet.name} picture` }
+                className="planet-card-image"
+              />
+              <Card.Body className="card-body">
+                <Card.Title className="card-title">{planet.name}</Card.Title>
+                <Card.Text className="planet-card-text">
+                  <p>
                     Population:
                     {' '}
                     {planet.population}
-                  </Card.Text>
-                  <Card.Text>
+                  </p>
+                  <p>
                     Climate:
                     {' '}
                     {planet.climate}
-                  </Card.Text>
-                  <br />
-                  <Card.Text>
+                  </p>
+                  <p>
                     Terrain:
                     {' '}
                     {planet.terrain}
-                  </Card.Text>
-                  <br />
-                  <Card.Text>
+                  </p>
+                  <p>
                     Rotation Period:
                     {' '}
                     {planet.rotation_period}
-                  </Card.Text>
-                  <br />
-                  <Card.Text>
+                  </p>
+                  <p>
                     Orbital Period:
                     {' '}
                     {planet.orbital_period}
-                  </Card.Text>
-                  <br />
-                  <Card.Text>
+                  </p>
+                  <p>
                     Diameter:
                     {' '}
                     {planet.diameter}
-                  </Card.Text>
-                  <br />
-                  <Card.Text>
+                  </p>
+                  <p>
                     Surface Water:
                     {' '}
                     {planet.surface_water}
-                  </Card.Text>
-                  <br />
-                  <Card.Text>
+                  </p>
+                  <p>
                     Gravity:
                     {' '}
                     {planet.gravity}
-                  </Card.Text>
-                </Card.Body>
-
-              </>
-            )))}
-        </Card>
+                  </p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          )))}
       </section>
-
     </>
 
   );

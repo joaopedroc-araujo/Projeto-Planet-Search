@@ -1,8 +1,15 @@
+@font-face {
+  font-family: StarWars;
+  src: local('StarJedi')
+    url('./fonts/Starjedi.ttf') format('truetype');
+}
+
 * {
   background: url('https://e0.pxfuel.com/wallpapers/606/105/desktop-wallpaper-star-wars-galaxy-background-novocom-top-star-wars-hyperspace.jpg')  no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: cover;
   color: rgb(226, 226, 26);
+  font-family: StarWars;
 }
 
 .header-logo {

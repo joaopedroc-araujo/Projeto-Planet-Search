@@ -1,7 +1,46 @@
-.table-header {
-  text-align: center;
+.planet-card {
+  align-items: center;
+  background: transparent;
+  border: 5px solid rgba(97, 95, 95, 0.8);
+  border-radius: 10px;
+  box-shadow: 10px white;
+  color: black;
+  display: inline-block;
+  height: 660px;
+  justify-content: space-around;
+  margin: 30px;
+  margin-left: 10%;
+  width: 360px;
 }
 
-.table-body {
-  text-align: center;
+.planet-card img {
+  background: transparent;
+  border-radius: 50%;
+  margin-top: 10px;
+  width: 200px;
+}
+
+.card-title {
+  background: transparent;
+  color: rgb(226, 226, 26);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 10px;
+}
+
+.planet-card, .card-body, .card-title, .planet-card-text {
+  background: rgba(41, 41, 41, 0.8);
+  color: yellow;
+}
+
+.planet-card p {
+  background: transparent;
+}
+
+.planet-card-text {
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 10px;
 }
