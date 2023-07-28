@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useFilterContext } from '../hooks/useFilterContext';
 import SortingComponent from './SortingComponent';
@@ -10,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './PlanetsTable.css';
 import { planetsImages } from '../helpers/planetsImages';
 import useFetch from '../hooks/useFetch';
+import sadChewbbaca from '../assets/chewbbaca.jpeg';
 
 function PlanetsTable() {
   const url = 'https://swapi.dev/api/planets';
@@ -57,17 +57,26 @@ function PlanetsTable() {
 
   if (planets.error) {
     return (
-      <span>
-        &quot;I felt a great disturbance in the Force,
+      <span className="star-wars-text">
+        &quot;i felt a great disturbance in the Force,
         as if millions of voices suddenly cried out
         in terror and were suddenly silenced.
-        I fear something terrible has happened.&quot;
-        ―Obi-Wan Kenobi, sensing the destruction of Alderaan.
+        i fear something terrible has happened.&quot;
+        ―obi-Wan Kenobi, sensing the destruction of Alderaan.
       </span>
     );
   }
+
   if (!data) {
-    return <Spinner animation="grow" variant="warning" />;
+    return (
+      <div className="spinner-container">
+        <Spinner
+          animation="grow"
+          variant="warning"
+          className="spinner"
+        />
+      </div>
+    );
   }
 
   const filteredData = data.filter((planet) => planet.name && planet.name.toLowerCase()
@@ -168,7 +177,7 @@ function PlanetsTable() {
           <input
             className="value-input"
             type="text"
-            placeholder="Value"
+            placeholder="value"
             value={ value }
             onChange={ ({ target }) => setValue(target.value) }
             data-testid="value-filter"
@@ -215,7 +224,14 @@ function PlanetsTable() {
       <SortingComponent data={ data } setData={ setData } />
       <section className="card-section">
         {filteredData.length === 0 ? (
-          <h3>No planets found</h3>
+          <div className="no-planets-found">
+            <img src={ sadChewbbaca } alt="sad Chewbbaca" className="sad-chewbbaca" />
+            <h3
+              className="no-planets-found"
+            >
+              No planets found
+            </h3>
+          </div>
         ) : (
           filteredData.map((planet) => (
             <div className="card-container" key={ planet.name }>
@@ -254,7 +270,7 @@ function PlanetsTable() {
                       {planet.rotation_period}
                     </p>
                     <p>
-                      Orbital Period:
+                      orbital Period:
                       {' '}
                       {planet.orbital_period}
                     </p>
@@ -280,7 +296,6 @@ function PlanetsTable() {
           )))}
       </section>
     </>
-
   );
 }
 

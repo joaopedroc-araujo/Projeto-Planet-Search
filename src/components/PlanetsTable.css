@@ -1,3 +1,16 @@
+.spinner-container {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+.spinner {
+  background-image: none;
+  height: 150px;
+  width: 150px;
+}
+
 .card-section {
   display: grid;
   grid-gap: 30px;
@@ -9,7 +22,7 @@
 .planet-card {
   align-items: center;
   background: transparent;
-  border: 5px solid rgba(97, 95, 95, 0.8);
+  border: 5px solid yellow;
   border-radius: 10px;
   box-shadow: 10px white;
   color: black;
@@ -18,6 +31,11 @@
   margin-left: auto;
   margin-right: auto;
   width: 360px;
+}
+
+.planet-card-image {
+  max-height: 200px;
+  padding: 10px;
 }
 
 .planet-card img {
@@ -54,6 +72,14 @@
 }
 
 .card-body {
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 10px;
+  text-align: center;
   width: 100%;
 }
 
@@ -100,6 +126,11 @@
   width: 20%;
 }
 
+.filter-div input {
+  height: 35px;
+  width: 100%;
+}
+
 .filter-div select:hover, .filter-div input:hover, .name-input:hover, .value-input:hover {
   cursor: pointer;
 }
@@ -120,7 +151,19 @@
   cursor: pointer;
 }
 
-.filter-div input {
-  height: 35px;
-  width: 100%;
+.no-planets-found {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.sad-chewbbaca {
+  border-radius: 50%;
+  width: 40%;
+}
+
+.star-wars-text {
+  width: 50%;
 }

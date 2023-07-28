@@ -1,0 +1,6 @@
+/* src/fonts.css */
+
+@font-face {
+  font-family: Star Jedi;
+  src: local('Star Jedi') , url('./fonts/Starjedi.ttf') format('truetype');
+}
