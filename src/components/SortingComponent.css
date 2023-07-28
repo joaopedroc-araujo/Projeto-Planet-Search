@@ -1,0 +1,28 @@
+.sorting-component {
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
+}
+
+.select {
+  background-color: rgba(48, 48, 48, 0.651);
+  border-color: yellow;
+  color: yellow;
+  cursor: pointer;
+  height: 35px;
+  margin: 30px 10px 15px 0;
+  width: 20%;
+}
+
+.asc-checkbox {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+.up, .down {
+  margin-top: 15px;
+  padding: 10px;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FilterProvider } from './hooks/useFilterContext';
 import logo from './assets/generatedtext (1).png';

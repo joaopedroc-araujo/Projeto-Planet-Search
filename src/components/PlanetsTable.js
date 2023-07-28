@@ -1,13 +1,15 @@
 /* eslint-disable max-lines */
 import { useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
-import useFetch from '../hooks/useFetch';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 import { useFilterContext } from '../hooks/useFilterContext';
 import SortingComponent from './SortingComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PlanetsTable.css';
 import { planetsImages } from '../helpers/planetsImages';
+import useFetch from '../hooks/useFetch';
 
 function PlanetsTable() {
   const url = 'https://swapi.dev/api/planets';
@@ -81,7 +83,7 @@ function PlanetsTable() {
   const handleFilter = () => {
     const newFilteredData = applyFilter(data);
     setData(newFilteredData);
-    setValue(0);
+    setValue('');
   };
 
   const reapplyFilters = (reapplyData, filters) => {
@@ -131,15 +133,17 @@ function PlanetsTable() {
     <>
       <div>
         <input
+          className="name-input"
           type="text"
-          placeholder="Search..."
           value={ filterValue }
+          placeholder="Planet name"
           data-testid="name-filter"
           onChange={ ({ target }) => setFilterValue(target.value) }
         />
       </div>
-      <div>
-        <select
+      <div className="filter-div">
+        <Form.Select
+          aria-label="Default select example"
           value={ column }
           onChange={ ({ target }) => setColumn(target.value) }
           data-testid="column-filter"
@@ -149,11 +153,9 @@ function PlanetsTable() {
               {option}
             </option>
           ))}
-        </select>
-      </div>
-
-      <div>
-        <select
+        </Form.Select>
+        <Form.Select
+          aria-label="Default select example"
           value={ comparison }
           onChange={ ({ target }) => setComparison(target.value) }
           data-testid="comparison-filter"
@@ -161,113 +163,120 @@ function PlanetsTable() {
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
-        </select>
+        </Form.Select>
+        <div>
+          <input
+            className="value-input"
+            type="text"
+            placeholder="Value"
+            value={ value }
+            onChange={ ({ target }) => setValue(target.value) }
+            data-testid="value-filter"
+            style={ { backgroundColor: 'black', color: 'yellow' } }
+          />
+        </div>
       </div>
-      <div>
-        <input
-          type="text"
-          value={ value }
-          onChange={ ({ target }) => setValue(target.value) }
-          data-testid="value-filter"
-        />
-      </div>
-
-      <button
-        onClick={ () => {
-          removeOption();
-          handleFilter();
-        } }
-        data-testid="button-filter"
-      >
-        Filter
-      </button>
-      {appliedFilters.map((filter) => (
-        <span
-          key={ filter.column }
-          data-testid="filter"
+      <div className="button-divs">
+        <Button
+          variant="outline-warning"
+          onClick={ () => {
+            removeOption();
+            handleFilter();
+          } }
+          data-testid="button-filter"
         >
-          <button
-            onClick={ () => removeFilter(filter.column) }
+          Filter
+        </Button>
+        {appliedFilters.map((filter) => (
+          <span
+            key={ filter.column }
+            data-testid="filter"
           >
-            {filter.column}
-            {' '}
-            {filter.comparison}
-            {' '}
-            {filter.value}
-            {' '}
-            x
-          </button>
-        </span>
-      ))}
-      <button
-        data-testid="button-remove-filters"
-        onClick={ () => removeAllFilters() }
-      >
-        Remover todas filtragens
-      </button>
+            <Button
+              variant="outline-warning"
+              onClick={ () => removeFilter(filter.column) }
+            >
+              {filter.column}
+              {' '}
+              {filter.comparison}
+              {' '}
+              {filter.value}
+            </Button>
+          </span>
+        ))}
+        <Button
+          variant="outline-warning"
+          data-testid="button-remove-filters"
+          onClick={ () => removeAllFilters() }
+        >
+          Remover todas filtragens
+        </Button>
+      </div>
       <SortingComponent data={ data } setData={ setData } />
       <section className="card-section">
         {filteredData.length === 0 ? (
           <h3>No planets found</h3>
         ) : (
           filteredData.map((planet) => (
-            <Card
-              style={ { width: '30rem' } }
-              className="text-center planet-card"
-              key={ planet.name }
-            >
-              <Card.Img
-                variant="top"
-                src={ planetsImages[0][planet.name] }
-                alt={ `${planet.name} picture` }
-                className="planet-card-image"
-              />
-              <Card.Body className="card-body">
-                <Card.Title className="card-title">{planet.name}</Card.Title>
-                <Card.Text className="planet-card-text">
-                  <p>
-                    Population:
-                    {' '}
-                    {planet.population}
-                  </p>
-                  <p>
-                    Climate:
-                    {' '}
-                    {planet.climate}
-                  </p>
-                  <p>
-                    Terrain:
-                    {' '}
-                    {planet.terrain}
-                  </p>
-                  <p>
-                    Rotation Period:
-                    {' '}
-                    {planet.rotation_period}
-                  </p>
-                  <p>
-                    Orbital Period:
-                    {' '}
-                    {planet.orbital_period}
-                  </p>
-                  <p>
-                    Diameter:
-                    {' '}
-                    {planet.diameter}
-                  </p>
-                  <p>
-                    Surface Water:
-                    {' '}
-                    {planet.surface_water}
-                  </p>
-                  <p>
-                    Gravity:
-                    {' '}
-                    {planet.gravity}
-                  </p>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <div className="card-container" key={ planet.name }>
+              <Card
+                style={ { width: '30rem' } }
+                className="text-center planet-card"
+                key={ planet.name }
+              >
+                <Card.Img
+                  variant="top"
+                  src={ planetsImages[0][planet.name] }
+                  alt={ `${planet.name} picture` }
+                  className="planet-card-image"
+                />
+                <Card.Body className="card-body">
+                  <Card.Title className="card-title">{planet.name}</Card.Title>
+                  <Card.Text className="planet-card-text">
+                    <p>
+                      Population:
+                      {' '}
+                      {planet.population}
+                    </p>
+                    <p>
+                      Climate:
+                      {' '}
+                      {planet.climate}
+                    </p>
+                    <p>
+                      Terrain:
+                      {' '}
+                      {planet.terrain}
+                    </p>
+                    <p>
+                      Rotation Period:
+                      {' '}
+                      {planet.rotation_period}
+                    </p>
+                    <p>
+                      Orbital Period:
+                      {' '}
+                      {planet.orbital_period}
+                    </p>
+                    <p>
+                      Diameter:
+                      {' '}
+                      {planet.diameter}
+                    </p>
+                    <p>
+                      Surface Water:
+                      {' '}
+                      {planet.surface_water}
+                    </p>
+                    <p>
+                      Gravity:
+                      {' '}
+                      {planet.gravity}
+                    </p>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
           )))}
       </section>
     </>

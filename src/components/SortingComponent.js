@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { originalOptions } from '../helpers/originalOptions';
+import './SortingComponent.css';
 
 function SortingComponent({ data, setData }) {
   const [sortColumn, setSortColumn] = useState('population');
@@ -11,8 +15,6 @@ function SortingComponent({ data, setData }) {
     const knownData = newData.filter((planet) => planet[sortColumn] !== 'unknown');
     const unknownData = newData.filter((planet) => planet[sortColumn] === 'unknown');
 
-    // console.log(unknownData);
-    // console.log(knownData);
     knownData.sort((a, b) => {
       let valueA = a[sortColumn];
       let valueB = b[sortColumn];
@@ -29,10 +31,7 @@ function SortingComponent({ data, setData }) {
       return 0;
     });
 
-    unknownData.sort((a, b) => a.name.localeCompare(b.name));
-
-    const unknownName = unknownData.map((planet) => planet.name);
-    return [...knownData, ...unknownName];
+    return [...knownData, ...unknownData];
   };
 
   const handleSort = () => {
@@ -43,51 +42,39 @@ function SortingComponent({ data, setData }) {
     }
   };
 
-  // console.log(sortColumn);
-  // console.log(sortOrder);
   return (
-    <div>
-      <div>
-        <select
-          data-testid="column-sort"
-          onChange={ (event) => setSortColumn(event.target.value) }
-        >
-          {originalOptions.map((option) => (
-            <option key={ option } value={ option }>
-              {option}
-            </option>
-          ))}
-        </select>
-
-        <div>
-          <label>
-            Ascending
-            <input
-              type="radio"
-              value="ASC"
-              data-testid="column-sort-input-asc"
-              checked={ sortOrder === 'ASC' }
-              onChange={ () => setSortOrder('ASC') }
-            />
-          </label>
-          <label>
-            Descending
-            <input
-              type="radio"
-              value="DESC"
-              data-testid="column-sort-input-desc"
-              checked={ sortOrder === 'DESC' }
-              onChange={ () => setSortOrder('DESC') }
-            />
-          </label>
-        </div>
-        <button
-          data-testid="column-sort-button"
-          onClick={ handleSort }
-        >
-          Sort
-        </button>
-      </div>
+    <div className="sorting-component">
+      <Form.Select
+        className="select"
+        aria-label="Default select example"
+        data-testid="column-sort"
+        onChange={ (event) => setSortColumn(event.target.value) }
+      >
+        {originalOptions.map((option) => (
+          <option key={ option } value={ option }>
+            {option}
+          </option>
+        ))}
+      </Form.Select>
+      <label>
+        <FontAwesomeIcon
+          icon={ sortOrder === 'ASC' ? faCaretUp : faCaretDown }
+          size="2xl"
+          className="up"
+        />
+        <input
+          className="asc-checkbox"
+          type="checkbox"
+          value={ sortOrder }
+          data-testid="column-sort-input-asc"
+          checked={ sortOrder === 'ASC' }
+          onChange={ () => {
+            const newSortOrder = sortOrder === 'ASC' ? 'DESC' : 'ASC';
+            setSortOrder(newSortOrder);
+            handleSort();
+          } }
+        />
+      </label>
     </div>
   );
 }

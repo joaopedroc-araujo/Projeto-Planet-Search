@@ -1,3 +1,11 @@
+.card-section {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
 .planet-card {
   align-items: center;
   background: transparent;
@@ -5,11 +13,10 @@
   border-radius: 10px;
   box-shadow: 10px white;
   color: black;
-  display: inline-block;
   height: 660px;
   justify-content: space-around;
-  margin: 30px;
-  margin-left: 10%;
+  margin-left: auto;
+  margin-right: auto;
   width: 360px;
 }
 
@@ -43,4 +50,77 @@
   font-size: 1.2rem;
   font-weight: 500;
   margin: 10px;
+  width: 100%;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.filter-div {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+::placeholder {
+  color: yellow;
+}
+
+.name-input {
+  background-color: rgba(48, 48, 48, 0.651);
+  border-color: yellow;
+  border-radius: 5px;
+  color: yellow;
+  height: 40px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.filter-div input:focus + label {
+  color: yellow;
+}
+
+.filter-div select, .filter-div option {
+  background-color: rgba(48, 48, 48, 0.651);
+  border-color: yellow;
+  color: yellow;
+  height: 35px;
+  margin: 0 10px;
+  width: 20%;
+}
+
+.value-input {
+  background-color: rgba(48, 48, 48, 0.651);
+  border: 1px solid yellow;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 10px;
+  width: 20%;
+}
+
+.filter-div select:hover, .filter-div input:hover, .name-input:hover, .value-input:hover {
+  cursor: pointer;
+}
+
+.button-divs {
+  margin-left: 10px;
+}
+
+.button-divs button {
+  border-color: yellow;
+  color: yellow;
+  margin-bottom: 15px;
+  margin-right: 15px;
+}
+
+.button-divs button:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.filter-div input {
+  height: 35px;
+  width: 100%;
 }
