@@ -82,7 +82,6 @@ function PlanetsTable() {
   const filteredData = data.filter((planet) => planet.name && planet.name.toLowerCase()
     .includes(filterValue.toLowerCase()));
 
-  // console.log(headers);
   const removeOption = () => {
     const updatedOptions = options.filter((option) => option !== column);
 
