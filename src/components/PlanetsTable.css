@@ -15,7 +15,7 @@
 }
 
 .planet-card {
-  @apply items-center bg-card-background border-4 border-yellow-custom rounded-lg shadow-white text-black h-[430px] lg:h-[660px] justify-around mx-auto w-64 lg:w-[360px];
+  @apply items-center bg-card-background border-4 border-yellow-custom rounded-lg shadow-white text-black h-[430px] lg:h-[660px] justify-around mx-auto w-64 lg:w-[360px] mb-5;
 }
 
 .planet-card img {
@@ -56,7 +56,7 @@
 }
 
 .value-input {
-  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom rounded-lg text-yellow-custom h-[40px] mb-[30px] ml-[10px] p-[10px] w-[50%] placeholder:text-yellow-custom lg:w-[20%];
+  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom rounded-lg text-yellow-custom h-[40px] mb-[10px] ml-[10px] p-[10px] w-[50%] placeholder:text-yellow-custom lg:w-[20%];
 }
 
 .filter-div input {
@@ -64,7 +64,7 @@
 }
 
 .filter-div select, .filter-div option {
-  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom text-yellow-custom h-[35px] mx-[10px] w-[60%] lg:w-52 lg:mb-2;
+  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom mb-2 text-yellow-custom h-[35px] mx-[10px] w-[60%] lg:w-52 lg:mb-2;
 }
 
 .name-input {
