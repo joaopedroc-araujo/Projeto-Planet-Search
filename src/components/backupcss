@@ -1,0 +1,62 @@
+.planet-card {
+  align-items: center;
+  background: transparent;
+  border: 5px solid yellow;
+  border-radius: 10px;
+  box-shadow: 10px white;
+  color: black;
+  height: 660px;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+  width: 360px;
+}
+
+.planet-card-image {
+  max-height: 200px;
+  padding: 10px;
+}
+
+.planet-card img {
+  background: transparent;
+  border-radius: 50%;
+  margin-top: 10px;
+  width: 200px;
+}
+
+.card-title {
+  background: transparent;
+  color: rgb(226, 226, 26);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 10px;
+}
+
+.planet-card, .card-body, .card-title, .planet-card-text {
+  color: yellow;
+}
+
+.planet-card p {
+  background: transparent;
+}
+
+.planet-card-text {
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 10px;
+  width: 100%;
+}
+
+.card-body {
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}

@@ -58,11 +58,17 @@ function PlanetsTable() {
   if (planets.error) {
     return (
       <span className="star-wars-text">
-        &quot;i felt a great disturbance in the Force,
-        as if millions of voices suddenly cried out
-        in terror and were suddenly silenced.
-        i fear something terrible has happened.&quot;
-        ―obi-Wan Kenobi, sensing the destruction of Alderaan.
+        <p className="px-5 text-center text-2xl">
+          i felt a great disturbance in the Force,
+          as if millions of voices suddenly cried out
+          in terror and were suddenly silenced.
+          i fear something terrible has happened.
+          <br />
+          <br />
+          <p className="text-xl">
+            obi-Wan Kenobi, sensing the destruction of Alderaan.
+          </p>
+        </p>
       </span>
     );
   }
@@ -149,7 +155,17 @@ function PlanetsTable() {
           onChange={ ({ target }) => setFilterValue(target.value) }
         />
       </div>
-      <div className="filter-div">
+      <div>
+        <input
+          className="value-input"
+          type="text"
+          placeholder="value"
+          value={ value }
+          onChange={ ({ target }) => setValue(target.value) }
+          data-testid="value-filter"
+        />
+      </div>
+      <div className="filter-div flex flex-col lg:flex">
         <Form.Select
           aria-label="Default select example"
           value={ column }
@@ -172,17 +188,7 @@ function PlanetsTable() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </Form.Select>
-        <div>
-          <input
-            className="value-input"
-            type="text"
-            placeholder="value"
-            value={ value }
-            onChange={ ({ target }) => setValue(target.value) }
-            data-testid="value-filter"
-            style={ { backgroundColor: 'black', color: 'yellow' } }
-          />
-        </div>
+
       </div>
       <div className="button-divs">
         <Button
@@ -235,7 +241,7 @@ function PlanetsTable() {
           filteredData.map((planet) => (
             <div className="card-container" key={ planet.name }>
               <Card
-                style={ { width: '30rem' } }
+                // style={ { width: '30rem' } }
                 className="text-center planet-card"
                 key={ planet.name }
               >
@@ -295,6 +301,7 @@ function PlanetsTable() {
           )))}
       </section>
     </>
+
   );
 }
 

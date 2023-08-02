@@ -3,7 +3,13 @@ export const content = [
   './src/**/*.{js,jsx,ts,tsx}',
 ];
 export const theme = {
-  extend: {},
+  extend: {
+    colors: {
+      'yellow-custom': 'rgb(255, 255, 0)',
+      'background-custom': 'rgba(48, 48, 48, 0.651)',
+      'card-background': 'rgba(41, 41, 41, 0.9)',
+    },
+  },
   screens: {
     sm: '394px',
     md: '768px',

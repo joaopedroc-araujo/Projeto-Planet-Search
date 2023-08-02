@@ -1,169 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .spinner-container {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
+  @apply flex h-screen justify-center mt-40;
 }
 
 .spinner {
-  background-image: none;
-  height: 150px;
-  width: 150px;
+  @apply bg-none h-36 w-36;
 }
 
 .card-section {
-  display: grid;
-  grid-gap: 30px;
-  grid-template-columns: repeat(2, 1fr);
-  margin-bottom: 50px;
-  margin-top: 50px;
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-8 my-12;
 }
 
 .planet-card {
-  align-items: center;
-  background: transparent;
-  border: 5px solid yellow;
-  border-radius: 10px;
-  box-shadow: 10px white;
-  color: black;
-  height: 660px;
-  justify-content: space-around;
-  margin-left: auto;
-  margin-right: auto;
-  width: 360px;
+  @apply items-center bg-card-background border-4 border-yellow-custom rounded-lg shadow-white text-black h-[430px] lg:h-[660px] justify-around mx-auto w-64 lg:w-[360px];
 }
 
-.planet-card-image {
-  max-height: 200px;
-  padding: 10px;
-}
+/* .planet-card-image {
+  @apply max-h-[180px] p-2.5;
+} */
 
 .planet-card img {
-  background: transparent;
-  border-radius: 50%;
-  margin-top: 10px;
-  width: 200px;
+  @apply bg-transparent rounded-full my-2.5 w-32 lg:w-52;
 }
 
 .card-title {
-  background: transparent;
-  color: rgb(226, 226, 26);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 10px;
+  @apply bg-transparent text-yellow-custom text-xl lg:text-xl font-bold leading-tight mb-2.5 bg-none mt-0;
 }
 
+/*
 .planet-card, .card-body, .card-title, .planet-card-text {
-  background: rgba(41, 41, 41, 0.8);
-  color: yellow;
-}
+  @apply bg-gray-800 bg-opacity-80 text-yellow-custom;
+} */
 
 .planet-card p {
-  background: transparent;
+  @apply bg-transparent bg-none;
 }
 
 .planet-card-text {
-  background: transparent;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin: 10px;
-  width: 100%;
+  @apply bg-card-background text-white text-sm lg:text-lg font-medium my-2.5 w-full;
 }
 
 .card-body {
-  align-items: center;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  padding: 10px;
-  text-align: center;
-  width: 100%;
+  @apply items-center rounded-lg flex flex-col justify-center overflow-hidden p-2.5 text-center w-full bg-card-background bg-none pt-0;
 }
 
 .filter-div {
-  display: flex;
-  margin-bottom: 30px;
+  @apply flex mb-8;
 }
 
 ::placeholder {
-  color: yellow;
-}
-
-.name-input {
-  background-color: rgba(48, 48, 48, 0.651);
-  border-color: yellow;
-  border-radius: 5px;
-  color: yellow;
-  height: 40px;
-  margin-bottom: 30px;
-  margin-left: 10px;
-  padding: 10px;
-  width: 50%;
+  @apply text-yellow-300;
 }
 
 .filter-div input:focus + label {
-  color: yellow;
-}
-
-.filter-div select, .filter-div option {
-  background-color: rgba(48, 48, 48, 0.651);
-  border-color: yellow;
-  color: yellow;
-  height: 35px;
-  margin: 0 10px;
-  width: 20%;
+  @apply text-yellow-300;
 }
 
 .value-input {
-  background-color: rgba(48, 48, 48, 0.651);
-  border: 1px solid yellow;
-  border-radius: 5px;
-  margin-left: 10px;
-  padding: 10px;
-  width: 20%;
+  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom rounded-lg text-yellow-custom h-[40px] mb-[30px] ml-[10px] p-[10px] w-[50%] placeholder:text-yellow-custom;
 }
 
 .filter-div input {
-  height: 35px;
-  width: 100%;
+  @apply h-[35px] w-full;
+}
+
+.filter-div select, .filter-div option {
+  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom text-yellow-custom h-[35px] mx-[10px] w-[60%] lg:w-52 lg:mb-2;
+}
+
+.name-input {
+  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom rounded-lg text-yellow-custom h-[40px] mb-[30px] ml-[10px] p-[10px] w-[70%] placeholder:text-yellow-custom;
 }
 
 .filter-div select:hover, .filter-div input:hover, .name-input:hover, .value-input:hover {
-  cursor: pointer;
+  @apply cursor-pointer;
 }
 
 .button-divs {
-  margin-left: 10px;
+  @apply ml-[10px];
 }
 
 .button-divs button {
-  border-color: yellow;
-  color: yellow;
-  margin-bottom: 15px;
-  margin-right: 15px;
+  @apply border border-yellow-custom text-yellow-custom mb-[15px] mr-[15px];
 }
 
 .button-divs button:hover {
-  color: white;
-  cursor: pointer;
+  @apply text-white cursor-pointer;
 }
 
 .no-planets-found {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
+  @apply items-center flex flex-col h-full justify-center mt-2;
 }
 
 .sad-chewbbaca {
-  border-radius: 50%;
-  width: 40%;
+  @apply rounded-full w-[40%];
 }
 
 .star-wars-text {
-  width: 50%;
+  @apply w-full text-center mx-auto px-4;
 }
