@@ -11,6 +11,8 @@
   color: rgb(226, 226, 26);
   font-family: Star Jedi , sans-serif;
   scroll-behavior: smooth;
+  background-attachment: fixed;
+  overscroll-behavior: none;
 }
 
 .header-logo {
