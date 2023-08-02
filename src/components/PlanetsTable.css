@@ -11,16 +11,12 @@
 }
 
 .card-section {
-  @apply grid grid-cols-1 lg:grid-cols-2 gap-8 my-12;
+  @apply grid grid-cols-1 lg:grid-cols-2 lg:gap-5 lg:my-12 justify-center lg:mx-8;
 }
 
 .planet-card {
   @apply items-center bg-card-background border-4 border-yellow-custom rounded-lg shadow-white text-black h-[430px] lg:h-[660px] justify-around mx-auto w-64 lg:w-[360px];
 }
-
-/* .planet-card-image {
-  @apply max-h-[180px] p-2.5;
-} */
 
 .planet-card img {
   @apply bg-transparent rounded-full my-2.5 w-32 lg:w-52;
@@ -60,7 +56,7 @@
 }
 
 .value-input {
-  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom rounded-lg text-yellow-custom h-[40px] mb-[30px] ml-[10px] p-[10px] w-[50%] placeholder:text-yellow-custom;
+  @apply bg-gray-800 bg-opacity-80 border border-yellow-custom rounded-lg text-yellow-custom h-[40px] mb-[30px] ml-[10px] p-[10px] w-[50%] placeholder:text-yellow-custom lg:w-[20%];
 }
 
 .filter-div input {

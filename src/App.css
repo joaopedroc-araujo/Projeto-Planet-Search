@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 * {
-  background: url('https://wallpapers.com/images/hd/star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c.jpg')  no-repeat center center fixed;
+  background: url('./assets/star-wars-space-background-1920-x-1080-f1o3qr8zm0z4662c (1).jpg')  no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: cover;
   color: rgb(226, 226, 26);
