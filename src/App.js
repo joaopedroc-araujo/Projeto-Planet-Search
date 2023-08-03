@@ -10,23 +10,25 @@ import PlanetsTable from './components/PlanetsTable';
 function App() {
   return (
     <FilterProvider>
-      <img
-        src={ backgroundImage }
-        alt="Background"
-        className="bg-image sm:bg-fixed sm:bg-cover sm:bg-center"
-      />
-      <header
-        className="header-logo"
-      >
+      <div className="App">
         <img
-          src={ logo }
-          alt="Planet Search logo"
-          className="w-72 md:w-96 lg:w-1/2 xl:w-1/3 "
+          src={ backgroundImage }
+          alt="Background"
+          className="bg-image sm:bg-fixed sm:bg-cover sm:bg-center h-[100vh]"
         />
-      </header>
-      <main>
-        <PlanetsTable />
-      </main>
+        <header
+          className="header-logo"
+        >
+          <img
+            src={ logo }
+            alt="Planet Search logo"
+            className="w-72 md:w-96 lg:w-1/2 xl:w-1/3 "
+          />
+        </header>
+        <main>
+          <PlanetsTable />
+        </main>
+      </div>
     </FilterProvider>
   );
 }
