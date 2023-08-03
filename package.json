@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@netlify/plugin-lighthouse": "^5.0.0",
     "@sheerun/mutationobserver-shim": "0.3.3",
     "@trybe/eslint-config-frontend": "^1.7.1",
     "cypress": "^10.11.0",

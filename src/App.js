@@ -13,7 +13,7 @@ function App() {
       <img
         src={ backgroundImage }
         alt="Background"
-        className="bg-image sm:h-full sm:object-cover"
+        className="bg-image sm:bg-fixed sm:bg-cover sm:bg-center"
       />
       <header
         className="header-logo"
